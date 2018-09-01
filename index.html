@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Compiler</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <style src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">Compiler</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <!--<form class="form-inline my-2 my-lg-0">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>-->
+
+  </nav>
+
+  <div class="row" style="margin-right: 0%">
+    <div class="col">
+      <div id="container" style="width:100%;height:470px;border:1px solid grey;"></div>
+
+    </div>
+    <button type="button" id="execute" onclick="maxWindow();" class="btn btn-primary" style="height:40px;margin-left: -10px;margin-right: 4px">RUN</button>
+
+    <iframe src="" id="output" class="col">
+      <p>Your browser does not support iframes.</p>
+
+    </iframe>
+
+  </div>
+
+  <div>console
+    <i class="icon-fullscreen"></i>
+  </div>
+  <iframe src="" id="output" class="col" height="80px">
+    <p>Your browser does not support iframes.</p>
+  </iframe>
+</body>
+
+</html>
+
+                        <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
+                        <script src="min/vs/loader.js"></script>
+                        <script>
+                            require.config({ paths: { 'vs': 'min/vs' }});
+                        
+                            require(['vs/editor/editor.main'], function() {
+                                var editor = monaco.editor.create(document.getElementById('container'), {
+                                    value: [localStorage.getItem("lastcode")].join(''),
+                                    language: 'html',
+                                    language: 'javascript',
+                                    theme: 'vs-dark'
+                                });
+                          
+                                function saveI() 
+        {
+            getVal = editor.getValue();
+            // get the value of the data
+         
+         
+            localStorage.setItem("lastcode", getVal);
+           runCode(getVal);
+
+        }
+        document.getElementById('container').addEventListener("keyup", saveI);
+        //document.getElementById('container').onclick=saveI;
+        });
+ 
+
+function runCode(val){
+  try {
+  
+
+
+
+    var content=val;
+    var iframe=document.getElementById("output");
+    iframe=(iframe.contentWindow)?iframe.contentWindow:(iframe.contentDocument)?iframe.contentDocument.document: iframe.contentDocument;
+    iframe.document.open();
+    iframe.document.write(content);
+    iframe.document.close();
+    return false;
+    }
+     catch(error) {
+  console.error(error);
+  // expected output: SyntaxError: unterminated string literal
+  // Note - error messages will vary depending on browser
+}
+  }
+   
+runCode(localStorage.getItem("lastcode"));
+
+
+
+   
+
+                        </script>
+
